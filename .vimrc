@@ -37,8 +37,11 @@ set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
 set go=             " 不要图形按钮  
 "color desert     " 设置背景主题  
-color ron     " 设置背景主题  
+"color ron     " 设置背景主题  
 "color torte     " 设置背景主题  
+set background=dark
+set t_Co=256
+colorscheme molokai
 "set guifont=Courier_New:h10:cANSI   " 设置字体  
 "autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
 autocmd InsertEnter * se cul    " 用浅色高亮当前行  
@@ -72,6 +75,9 @@ set smarttab
 set number
 " 历史记录数
 set history=1000
+" 相对行号
+set relativenumber number
+
 "搜索逐字符高亮
 set hlsearch
 set incsearch
@@ -111,7 +117,7 @@ nmap tt :%s/\t/    /g<CR>
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.c,*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
@@ -121,14 +127,20 @@ func SetTitle()
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
-		call append(line(".")+1, "") 
+	    call append(line(".")+1, "") 
+
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+	    call append(line(".")+1, "")
+
 "    elseif &filetype == 'mkd'
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%")) 
-		call append(line(".")+1, "	> Author: ma6174") 
-		call append(line(".")+2, "	> Mail: ma6174@163.com ") 
+		call append(line(".")+1, "	> Author: ") 
+		call append(line(".")+2, "	> Mail: ") 
 		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
 		call append(line(".")+4, " ************************************************************************/") 
 		call append(line(".")+5, "")
@@ -143,7 +155,7 @@ func SetTitle()
 		call append(line(".")+7, "")
 	endif
 "	if &filetype == 'java'
-"		call append(line(".")+6,"public class ".expand("%"))
+"		call append(line(".")+6,"public class ".strpart(expand("%d"),0,strlen(expand("%"))-5))
 "		call append(line(".")+7,"")
 "	endif
 	"新建文件后，自动定位到文件末尾
@@ -161,6 +173,7 @@ map <C-A> ggVG$"+y
 map <F12> gg=G
 map <C-w> <C-w>w
 imap <C-k> <C-y>,
+imap <C-t> <C-q><TAB>
 imap <C-j> <ESC>
 " 选中状态下 Ctrl+c 复制
 "map <C-v> "*pa
@@ -177,7 +190,8 @@ nnoremap <C-F2> :vert diffsplit
 "nnoremap <Leader>fu :CtrlPFunky<Cr>
 "nnoremap <C-n> :CtrlPFunky<Cr>
 "列出当前目录文件  
-map <F3> :NERDTree<CR>  
+map <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC> :NERDTreeToggle<CR>
 "打开树状文件目录  
 map <C-F3> \be  
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
@@ -485,3 +499,12 @@ let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
 let g:ctrlp_extensions = ['funky']
 
 let NERDTreeIgnore=['\.pyc']
+
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellBad term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellBad term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellBad  term=underline cterm=underline
