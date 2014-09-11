@@ -23,6 +23,7 @@ mv -f ~/vim ~/.vim
 mv -f ~/.vimrc ~/.vimrc_old
 mv -f ~/.vim/.vimrc ~/
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+>>>>>>> 8729588007ef52b67676f8e22324cbcaecdc9877
 echo "ma6174正在努力为您安装bundle程序" > ma6174
 echo "安装完毕将自动退出" >> ma6174
 echo "请耐心等待" >> ma6174
