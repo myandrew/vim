@@ -181,7 +181,6 @@ imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
 vmap <C-c> "+y
-set mouse=v
 "set clipboard=unnamed
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
@@ -321,7 +320,7 @@ set backspace=2
 " 允许backspace和光标键跨越行边界
 set whichwrap+=<,>,h,l
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
+set mouse=v
 set selection=exclusive
 set selectmode=mouse,key
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
@@ -470,8 +469,14 @@ Bundle 'The-NERD-Commenter'
 Bundle 'django_templates.vim'
 Bundle 'Django-Projects'
 
+
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
+"golang
+Bundle 'cespare/vim-golang'
+Bundle 'fatih/vim-go'
+Bundle 'dgryski/vim-godef'
+Bundle 'undx/vim-gocode'
 " ...
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
@@ -497,6 +502,9 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,*.png,*.jpg,*.gif  " Windows
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
 let g:ctrlp_extensions = ['funky']
+let g:gofmt_command = 'goimports'
+
+autocmd BufWritePre *.go :Fmt
 
 let NERDTreeIgnore=['\.pyc']
 
